@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mappin-Out | Digital Marketing, Content Production & Growth Solutions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Mirano';
+            src: url('fonts/Mirano.woff2') format('woff2');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        :root {
+            --sky-blue: #8ECAE6; --ocean-blue: #219EBC; --deep-navy: #023047;
+            --warm-gold: #FFB703; --vibrant-orange: #FB8500;
+            --font-primary: 'Mirano', 'Arial Black', sans-serif; --font-secondary: 'PT Sans', sans-serif;
+            --glass-bg: rgba(2, 48, 71, 0.45); --glass-border: rgba(142, 202, 230, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-secondary); background-color: #011625; color: #ffffff; overflow-x: hidden; min-height: 100vh; }
+        h1, h2, h3, h4 { font-family: var(--font-primary); }
+        p, .sub-heading { font-family: var(--font-secondary); }
+
+        /* --- BACKGROUND MANAGEMENT --- */
+        .video-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+        .video-bg-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.12; filter: blur(2px); }
+        .video-overlay-tint { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(1, 22, 37, 0.97) 0%, rgba(2, 48, 71, 0.92) 100%); z-index: -1; }
+        #scroll-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+        /* --- FIXED STANDARDIZED HEADER SYSTEM --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(1, 22, 37, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); height: 80px; }
+        .nav-container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; height: 100%; flex-shrink: 0; }
+        .logo-img { height: 50px; width: auto; object-fit: contain; display: block; }
+        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: block; }
+        .logo-title-text span { color: var(--vibrant-orange); }
+
+        .nav-menu { display: flex; gap: 1.5rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
+        .nav-menu li { display: block; white-space: nowrap; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; position: relative; padding: 0.5rem 0; display: block; line-height: 1; letter-spacing: 0.5px; }
+        .nav-link:hover { color: var(--warm-gold); }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--warm-gold); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+        .menu-toggle { display: none; font-size: 1.5rem; color: #ffffff; cursor: pointer; }
+
+        /* --- CORE HERO ROW --- */
+        .hero-section { min-height: 95vh; display: flex; align-items: center; justify-content: center; padding: 160px 2rem 80px 2rem; text-align: center; }
+        .hero-inner { max-width: 950px; margin: 0 auto; z-index: 5; }
+        .hero-inner h1 { font-size: 4rem; line-height: 1.15; color: #ffffff; margin-bottom: 2rem; font-weight: 900; }
+        .hero-inner h1 span { color: var(--sky-blue); background: linear-gradient(135deg, #ffffff 30%, var(--sky-blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-inner p { font-size: 1.3rem; color: #cbd5e1; max-width: 800px; margin: 0 auto 3rem auto; line-height: 1.6; }
+        
+        .btn-cta { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--vibrant-orange) 0%, var(--warm-gold) 100%); color: var(--deep-navy); padding: 1.1rem 2.8rem; border-radius: 50px; font-weight: 700; text-transform: uppercase; font-size: 0.95rem; border: none; cursor: pointer; transition: all 0.3s ease; text-decoration: none; box-shadow: 0 6px 25px rgba(251, 133, 0, 0.35); }
+        .btn-cta:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(251, 133, 0, 0.55); }
+
+        /* --- CENTERED LINEAR CONTENT DIVIDER --- */
+        .center-line-divider { width: 100%; display: flex; justify-content: center; align-items: center; margin: 2rem 0; position: relative; }
+        .center-line-divider::before { content: ''; width: 150px; height: 2px; background: linear-gradient(90deg, transparent, var(--ocean-blue), transparent); }
+        .center-line-divider i { color: var(--warm-gold); font-size: 0.75rem; position: absolute; background: #011625; padding: 0 10px; }
+
+        /* --- PHILOSOPHY QUOTE HIGHLIGHT SECTION --- */
+        .quote-container { background: rgba(2, 48, 71, 0.35); padding: 5rem 2rem; text-align: center; backdrop-filter: blur(8px); }
+        .quote-inner { max-width: 850px; margin: 0 auto; }
+        .quote-inner p { font-family: var(--font-primary); font-size: 1.8rem; line-height: 1.5; color: var(--warm-gold); font-style: italic; }
+
+        /* --- SECTIONS CONTENT BLOCKS --- */
+        .section-block { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .block-details h2 { font-size: 2.6rem; color: #ffffff; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+        .block-details h2 span { color: var(--vibrant-orange); }
+        .block-details p { font-size: 1.15rem; color: #e2e8f0; line-height: 1.75; }
+        .graphic-panel-box { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 4rem; text-align: center; backdrop-filter: blur(10px); }
+        .graphic-panel-box i { font-size: 5rem; color: var(--ocean-blue); margin-bottom: 1.5rem; }
+
+        /* --- PROCESS STRIP ARCHITECTURE --- */
+        .process-header { text-align: center; margin-bottom: 4rem; }
+        .process-header h2 { font-size: 2.8rem; margin-bottom: 1rem; text-transform: uppercase; }
+        .process-header p { font-size: 1.2rem; color: var(--sky-blue); }
+        .process-flow-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; row-gap: 3rem; margin-bottom: 2rem; }
+        .process-step-card { background: rgba(1, 22, 37, 0.6); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .process-step-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--ocean-blue); }
+        .process-step-card:hover { transform: translateY(-5px); border-color: var(--sky-blue); background: rgba(2, 48, 71, 0.3); }
+        .step-number-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
+        .step-number-title h3 { font-size: 1.3rem; color: #ffffff; letter-spacing: 0.5px; }
+        .step-index-label { font-size: 0.8rem; font-weight: bold; background: rgba(142,202,230,0.15); color: var(--sky-blue); padding: 0.3rem 0.8rem; border-radius: 30px; }
+
+        /* --- REDESIGNED GATEWAY BOARD ROW WITH ACTIVE BUTTON CTAS --- */
+        .gateway-navigation-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; margin-bottom: 3rem; }
+        .gateway-navigation-card { background: linear-gradient(135deg, rgba(2,48,71,0.6) 0%, rgba(1,22,37,0.8) 100%); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3.5rem 2.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 300px; transition: all 0.4s ease; backdrop-filter: blur(10px); }
+        .gateway-navigation-card:hover { transform: scale(1.02); border-color: var(--warm-gold); }
+        .gateway-navigation-card h3 { font-size: 1.8rem; color: var(--sky-blue); margin-bottom: 1rem; text-transform: uppercase; }
+        .gateway-navigation-card p { font-size: 1.05rem; color: #cbd5e1; margin-bottom: 2rem; line-height: 1.5; }
+        
+        .btn-gateway-cta { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: var(--warm-gold); border: 2px solid var(--warm-gold); padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; text-decoration: none; transition: all 0.3s ease; align-self: flex-start; letter-spacing: 0.5px; }
+        .btn-gateway-cta:hover { background: var(--warm-gold); color: var(--deep-navy); box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3); }
+
+        /* --- REDESIGNED ULTRA-LOW LENGTH SLIM FOOTER --- */
+        footer { background: #010c14; border-top: 1px solid var(--glass-border); padding: 1.2rem 2rem 0.8rem 2rem; font-size: 0.85rem; }
+        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; text-align: left; padding-bottom: 1rem; }
+        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+        .footer-col ul li a { color: #cbd5e1; text-decoration: none; transition: color 0.3s ease; display: block; line-height: 1.2; }
+        .footer-col ul li a:hover { color: var(--sky-blue); }
+        .footer-col p { color: #cbd5e1; line-height: 1.3; }
+        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; margin-bottom: 0.5rem; list-style: none; }
+        .footer-social-row a { color: #ffffff; font-size: 1.2rem; transition: all 0.3s ease; }
+        .footer-social-row a:hover { transform: translateY(-2px); }
+        .footer-social-row .inst:hover { color: #E1306C; }
+        .footer-social-row .lnk:hover { color: #0077B5; }
+        .footer-social-row .ytb:hover { color: #FF0000; }
+        .footer-social-row .wts:hover { color: #25D366; }
+        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; }
+
+        @media (max-width: 1150px) { .nav-menu { gap: 1rem; } .nav-link { font-size: 0.85rem; } .logo-title-text { font-size: 1rem; } }
+        @media (max-width: 1024px) { .hero-inner h1 { font-size: 2.8rem; } .grid-split, .gateway-navigation-row, .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .process-flow-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .menu-toggle { display: block; } .nav-menu { position: fixed; top: 80px; left: -100%; width: 100%; height: calc(100vh - 80px); background: #011625; flex-direction: column; align-items: center; padding-top: 3rem; transition: left 0.4s ease; border-top: 1px solid var(--glass-border); margin-left: 0; } .nav-menu.mobile-open { left: 0; } .process-flow-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) { .logo-title-text { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="video-bg-container"><video src="videos/home-bg-marketing.mp4" autoplay loop muted playsinline></video><div class="video-overlay-tint"></div></div>
+    <canvas id="scroll-canvas"></canvas>
+
+    <header>
+        <div class="nav-container">
+            <a class="logo-area" href="index.html">
+                <img class="logo-img" src="images/logo-new.png" alt="Mappin-Out Logo">
+                <div class="logo-title-text">Mappinout <span>Digital Solutions</span></div>
+            </a>
+            <ul class="nav-menu" id="navLinks">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li><a href="autonomous.html" class="nav-link">Autonomous System</a></li>
+                <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- CONTENT SECTION 1: HERO DISPLAY -->
+    <section class="hero-section">
+        <div class="hero-inner">
+            <h1>Digital Marketing, Content<br>Production & <span>Growth Solutions for Modern Brands</span></h1>
+            <p>We help startups, creators, and businesses grow through strategic consulting, content production, branding, social media management, performance marketing, and business automation.</p>
+            <a class="btn-cta" href="contact.html">Get Free Consultation <i class="fa-solid fa-circle-chevron-right"></i></a>
+        </div>
+    </section>
+
+    <div class="center-line-divider"><i class="fa-solid fa-circle"></i></div>
+
+    <!-- CORE BRAND THOUGHTS SYSTEM -->
+    <section class="quote-container">
+        <div class="quote-inner">
+            <p>"The strongest brands don't grow through random marketing. They grow through strategy, content, consistency, and systems designed to scale."</p>
+        </div>
+    </section>
+
+    <div class="center-line-divider"><i class="fa-solid fa-circle"></i></div>
+
+    <!-- CONTENT SECTION 2: VALUES OVERVIEW -->
+    <section class="section-block">
+        <div class="grid-split">
+            <div class="block-details">
+                <h2>What We <span>Do?</span></h2>
+                <p>At MAPPIN-OUT, we help businesses, startups, and creators build a strong digital presence through strategy, creativity, and technology. From brand positioning and content production to social media management, performance marketing, and business automation, our solutions are designed to increase visibility, drive engagement, generate qualified leads, and support long-term growth. We don't just deliver services—we create scalable digital systems that help brands grow smarter, faster, and more consistently in today's competitive market.</p>
+            </div>
+            <div class="graphic-panel-box">
+                <i class="fa-solid fa-layer-group"></i>
+                <svg viewBox="0 0 100 40" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg"><path d="M5,35 Q25,5 50,20 T95,10" fill="none" stroke="#FB8500" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="20" r="4" fill="#FFB703"/><circle cx="95" cy="10" r="4" fill="#8ECAE6"/></svg>
+            </div>
+        </div>
+    </section>
+
+    <div class="center-line-divider"><i class="fa-solid fa-circle"></i></div>
+
+    <!-- CONTENT SECTION 3: SYSTEM PROCESS TIMELINE -->
+    <section class="section-block">
+        <div class="process-header">
+            <h2>Our Process</h2>
+            <p>Turning Ideas Into Impactful Digital Experiences</p>
+        </div>
+        <div class="process-flow-grid">
+            <div class="process-step-card"><div class="step-number-title"><h3>Discover</h3><span class="step-index-label">Step 01</span></div><p>Understanding your business, audience, and growth opportunities. Research-driven insights help us create solutions aligned with your goals and market needs.</p></div>
+            <div class="process-step-card"><div class="step-number-title"><h3>Strategize</h3><span class="step-index-label">Step 02</span></div><p>Building a customized roadmap for measurable business growth. From brand positioning to campaign planning, every action starts with a clear strategy.</p></div>
+            <div class="process-step-card"><div class="step-number-title"><h3>Create</h3><span class="step-index-label">Step 03</span></div><p>Crafting content, designs, and digital experiences that stand out. Our creative team develops assets that capture attention and strengthen your brand identity.</p></div>
+            <div class="process-step-card"><div class="step-number-title"><h3>Execute</h3><span class="step-index-label">Step 04</span></div><p>Launching campaigns, websites, and growth initiatives with precision. We ensure every element is implemented effectively to maximize impact and performance.</p></div>
+            <div class="process-step-card"><div class="step-number-title"><h3>Optimize</h3><span class="step-index-label">Step 05</span></div><p>Analyzing performance and improving results through data. Continuous monitoring helps us refine strategies and unlock new growth opportunities.</p></div>
+            <div class="process-step-card"><div class="step-number-title"><h3>Scale</h3><span class="step-index-label">Step 06</span></div><p>Building systems that support long-term business success. From automation to advanced marketing solutions, we help brands grow smarter and faster.</p></div>
+        </div>
+    </section>
+
+    <div class="center-line-divider"><i class="fa-solid fa-circle"></i></div>
+
+    <!-- STRATEGIC INTERNAL GATEWAYS DISPATCH GRID -->
+    <section class="section-block" style="padding-top: 0;">
+        <div class="gateway-navigation-row">
+            <div class="gateway-navigation-card">
+                <div>
+                    <h3>Proven Results Across Industries</h3>
+                    <p>Explore our portfolio to see how we've helped businesses strengthen their digital presence through content creation, branding, website development, and marketing.</p>
+                </div>
+                <a href="portfolio.html" class="btn-gateway-cta">View Portfolio <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+            <div class="gateway-navigation-card">
+                <div>
+                    <h3>Comprehensive Digital Growth Services</h3>
+                    <p>From content production and social media management to performance marketing and automation, we deliver solutions designed for sustainable business growth.</p>
+                </div>
+                <a href="services.html" class="btn-gateway-cta">Explore Services <i class="fa-solid fa-arrow-right-long"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="autonomous.html">Autonomous System</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="services.html">Strategy & Consulting</a></li><li><a href="services.html">Content Production</a></li><li><a href="services.html">Design & Branding</a></li><li><a href="services.html">Social Media Management</a></li><li><a href="services.html">Performance Marketing</a></li><li><a href="services.html">Automation & Tech</a></li></ul></div>
+            <div class="footer-col"><h4>Address</h4><p><i class="fa-solid fa-location-dot" style="color:var(--warm-gold); margin-right:5px;"></i> Coimbatore, Tamil Nadu, India</p></div>
+        </div>
+        <ul class="footer-social-row">
+            <li><a href="https://www.instagram.com/mappinout_25?igsh=MTJ6ZjJ2Y2ltdTQzbw==" class="inst" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" class="lnk" aria-label="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            <li><a href="https://youtube.com/@mappin-out?si=DnpauxiVIUIoTYyb" class="ytb" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+            <li><a href="https://wa.me/9952680230" class="wts" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+        </ul>
+        <div class="footer-copy">&copy; 2026 Mappin-Out Digital Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('scroll-canvas'); const ctx = canvas.getContext('2d'); let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+        class FallingMatrixParticle {
+            constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * -canvas.height; this.size = Math.random() * 2 + 1; this.speedY = Math.random() * 0.7 + 0.2; this.color = Math.random() > 0.5 ? '#8ECAE6' : '#FFB703'; }
+            update() { this.y += this.speedY; if (this.y > canvas.height) { this.y = -20; this.x = Math.random() * canvas.width; } }
+            draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        for(let i=0; i<45; i++) particles.push(new FallingMatrixParticle());
+        function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        animate();
+    </script>
+</body>
+</html>

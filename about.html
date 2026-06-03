@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Mappin-Out</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sky-blue: #8ECAE6; --ocean-blue: #219EBC; --deep-navy: #023047;
+            --warm-gold: #FFB703; --vibrant-orange: #FB8500;
+            --font-primary: 'Mirano', 'Arial Black', sans-serif; --font-secondary: 'PT Sans', sans-serif;
+            --glass-bg: rgba(2, 48, 71, 0.6); --glass-border: rgba(142, 202, 230, 0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-secondary); background-color: #011625; color: #ffffff; }
+        h1, h2, h3, h4 { font-family: var(--font-primary); }
+        
+        .video-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+        .video-bg-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.18; filter: blur(2px); }
+        .video-overlay-tint { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(1,22,37,0.92), rgba(2,48,71,0.9)); z-index: -1; }
+
+        /* --- FIXED STANDARDIZED HEADER SYSTEM --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(1, 22, 37, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); height: 80px; }
+        .nav-container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; height: 100%; flex-shrink: 0; }
+        .logo-img { height: 50px; width: auto; object-fit: contain; display: block; }
+        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: block; }
+        .logo-title-text span { color: var(--vibrant-orange); }
+        
+        .nav-menu { display: flex; gap: 1.5rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
+        .nav-menu li { display: block; white-space: nowrap; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; position: relative; padding: 0.5rem 0; display: block; line-height: 1; letter-spacing: 0.5px; }
+        .nav-link:hover { color: var(--warm-gold); }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--warm-gold); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 140px 2rem 60px 2rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.5rem; display: inline-block; position: relative; }
+        .section-header h2::after { content: ''; display: block; width: 60%; height: 3px; background: linear-gradient(90deg, var(--ocean-blue), var(--vibrant-orange)); margin: 10px auto 0; }
+
+        .statement-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem; margin-bottom: 4rem; backdrop-filter: blur(8px); }
+        .statement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        .statement-box h3 { color: var(--warm-gold); font-size: 1.6rem; margin-bottom: 1rem; }
+
+        .team-title { text-align: center; font-size: 2rem; margin-bottom: 2.5rem; color: var(--sky-blue); }
+        .team-container-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2rem; }
+        
+        .team-member-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center; backdrop-filter: blur(8px); transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .team-member-card:nth-child(1) { grid-column: 1 / 3; }
+        .team-member-card:nth-child(2) { grid-column: 3 / 5; }
+        .team-member-card:nth-child(3) { grid-column: 5 / 7; }
+        .team-member-card:nth-child(4) { grid-column: 2 / 4; }
+        .team-member-card:nth-child(5) { grid-column: 4 / 6; }
+        .team-member-card:hover { transform: translateY(-10px); border-color: var(--sky-blue); }
+        
+        .avatar-image-frame { width: 110px; height: 110px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 3px solid var(--sky-blue); background: #023047; }
+        .avatar-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .team-member-card h4 { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .team-member-card .role-title { font-size: 0.85rem; color: var(--warm-gold); font-weight: bold; text-transform: uppercase; margin-bottom: 0.4rem; }
+        .team-member-card p { font-size: 0.95rem; color: #cbd5e1; }
+
+        /* --- REDESIGNED ULTRA-LOW LENGTH SLIM FOOTER --- */
+        footer { background: #010c14; border-top: 1px solid var(--glass-border); padding: 1.2rem 2rem 0.8rem 2rem; font-size: 0.85rem; }
+        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; text-align: left; padding-bottom: 1rem; }
+        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+        .footer-col ul li a { color: #cbd5e1; text-decoration: none; transition: color 0.3s ease; display: block; line-height: 1.2; }
+        .footer-col ul li a:hover { color: var(--sky-blue); }
+        .footer-col p { color: #cbd5e1; line-height: 1.3; }
+        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; margin-bottom: 0.5rem; list-style: none; }
+        .footer-social-row a { color: #ffffff; font-size: 1.2rem; transition: all 0.3s ease; }
+        .footer-social-row a:hover { transform: translateY(-2px); }
+        .footer-social-row .inst:hover { color: #E1306C; }
+        .footer-social-row .lnk:hover { color: #0077B5; }
+        .footer-social-row .ytb:hover { color: #FF0000; }
+        .footer-social-row .wts:hover { color: #25D366; }
+        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; }
+
+        @media (max-width: 1150px) { .nav-menu { gap: 1rem; } .nav-link { font-size: 0.85rem; } .logo-title-text { font-size: 1rem; } }
+        @media (max-width: 1024px) { .statement-grid, .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .team-container-grid { grid-template-columns: repeat(4, 1fr); } .team-member-card:nth-child(1), .team-member-card:nth-child(2), .team-member-card:nth-child(3), .team-member-card:nth-child(4) { grid-column: span 2; } .team-member-card:nth-child(5) { grid-column: 2 / 4; } }
+        @media (max-width: 768px) { .team-container-grid { grid-template-columns: 1fr; } .team-member-card:nth-child(n) { grid-column: auto; } }
+        @media (max-width: 480px) { .logo-title-text { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="video-bg-container"><video src="videos/about-bg-team.mp4" autoplay loop muted playsinline></video><div class="video-overlay-tint"></div></div>
+
+    <header>
+        <div class="nav-container">
+            <a class="logo-area" href="index.html">
+                <img class="logo-img" src="images/logo-new.png" alt="Mappin-Out Logo">
+                <div class="logo-title-text">Mappinout <span>Digital Solutions</span></div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li><a href="autonomous.html" class="nav-link">Autonomous System</a></li>
+                <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="section-header"><h2>About Us</h2></div>
+        <div class="statement-card">
+            <div class="statement-grid">
+                <div class="statement-box">
+                    <h3><i class="fa-solid fa-bullseye"></i> Our Mission</h3>
+                    <p>To empower small and medium enterprises with scalable digital solutions and to guide organizations through their technological and cultural transformation by providing strategic insights and fostering innovation.</p>
+                </div>
+                <div class="statement-box">
+                    <h3><i class="fa-solid fa-eye"></i> Our Vision</h3>
+                    <p>To create a business world where technology empowers every organization to reach its full potential, creating lasting value for customers and employees alike, optimizing business profits through strategy.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="team-title">Our Leadership Team</h3>
+        <div class="team-container-grid">
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/CEO.png" alt="Chief Executive Officer"></div><h4>Chief Executive Officer</h4><div class="role-title">BRAND VISION & GROWTH</div><p>Drives overall corporate direction, aligning business scaling structures with technical marketing execution parameters.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/COO.jpeg" alt="Chief Operating Officer"></div><h4>Chief Operating Officer</h4><div class="role-title">OPERATIONS & MANAGEMENT</div><p>Manages daily workflows, optimizing service fulfillment pipelines and ensuring smooth campaign execution models.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Graphic Designer.jpeg" alt="Graphic Designer"></div><h4>Graphic Designer</h4><div class="role-title">VISUAL IDENTITY</div><p>Crafting layouts, social assets, and designs that build a strong brand presence and look stunning.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Editor.jpeg" alt="Editor"></div><h4>Editor</h4><div class="role-title">POST-PRODUCTION</div><p>Modifying pacing, visual framing, and audio structures for high-performance organic short-form reels.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Content Strategist.jpeg" alt="Content Strategist"></div><h4>Content Strategist</h4><div class="role-title">AUDIENCE ENGAGEMENT</div><p>Researching audience opportunities to build customized roadmaps and structured content plans for brands.</p></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="autonomous.html">Autonomous System</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="services.html">Strategy & Consulting</a></li><li><a href="services.html">Content Production</a></li><li><a href="services.html">Design & Branding</a></li><li><a href="services.html">Social Media Management</a></li><li><a href="services.html">Performance Marketing</a></li><li><a href="services.html">Automation & Tech</a></li></ul></div>
+            <div class="footer-col"><h4>Address</h4><p><i class="fa-solid fa-location-dot" style="color:var(--warm-gold); margin-right:5px;"></i> Coimbatore, Tamil Nadu, India</p></div>
+        </div>
+        <ul class="footer-social-row">
+            <li><a href="https://www.instagram.com/mappinout_25?igsh=MTJ6ZjJ2Y2ltdTQzbw==" class="inst" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" class="lnk" aria-label="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            <li><a href="https://youtube.com/@mappin-out?si=DnpauxiVIUIoTYyb" class="ytb" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+            <li><a href="https://wa.me/9952680230" class="wts" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+        </ul>
+        <div class="footer-copy">&copy; 2026 Mappin-Out Digital Solutions. All Rights Reserved.</div>
+    </footer>
+</body>
+</html>

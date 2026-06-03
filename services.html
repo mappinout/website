@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Mappin-Out</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- FIXED: Restored the exact working font import format -->
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sky-blue: #8ECAE6; --ocean-blue: #219EBC; --deep-navy: #023047;
+            --warm-gold: #FFB703; --vibrant-orange: #FB8500;
+            --font-primary: 'Mirano', 'Arial Black', sans-serif; --font-secondary: 'PT Sans', sans-serif;
+            --glass-bg: rgba(2, 48, 71, 0.45); --glass-border: rgba(142, 202, 230, 0.15);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-secondary); background-color: #011625; color: #ffffff; overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: var(--font-primary); }
+
+        .video-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+        .video-bg-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.15; filter: blur(2px); }
+        .video-overlay-tint { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(1,22,37,0.95), rgba(2,48,71,0.9)); z-index: -1; }
+
+        /* --- FIXED: PERFECT SINGLE-LINE HEADER NAVIGATION ALIGNMENT --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(1, 22, 37, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); height: 80px; }
+        .nav-container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        
+        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; height: 100%; flex-shrink: 0; }
+        .logo-img { height: 50px; width: auto; object-fit: contain; display: block; }
+        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: block; }
+        .logo-title-text span { color: var(--vibrant-orange); }
+        
+        .nav-menu { display: flex; gap: 1.5rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
+        .nav-menu li { display: block; white-space: nowrap; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; position: relative; padding: 0.5rem 0; display: block; line-height: 1; letter-spacing: 0.5px; }
+        .nav-link:hover { color: var(--warm-gold); }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--warm-gold); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 140px 2rem 60px 2rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 { font-size: 2.5rem; display: inline-block; position: relative; }
+        .section-header h2::after { content: ''; display: block; width: 60%; height: 3px; background: linear-gradient(90deg, var(--ocean-blue), var(--vibrant-orange)); margin: 10px auto 0; }
+
+        /* --- AUDIT PROMOTION CONTAINER --- */
+        .promo-container-card { 
+            background: var(--glass-bg); border: 2px solid var(--glass-border); border-radius: 24px;
+            padding: 2.5rem; margin-bottom: 5rem; backdrop-filter: blur(10px);
+            display: grid; grid-template-columns: 1.1fr 1fr 0.9fr; gap: 2.5rem; align-items: start; text-align: left;
+        }
+        .promo-left-details { display: flex; flex-direction: column; gap: 1rem; }
+        .promo-icon-title-row { display: flex; gap: 1rem; align-items: flex-start; }
+        .promo-main-icon-badge { width: 65px; height: 65px; border-radius: 50%; background: rgba(255, 183, 3, 0.15); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--warm-gold); flex-shrink: 0; }
+        .promo-left-details h3 { font-size: 2.2rem; line-height: 1.1; font-weight: 900; }
+        .promo-left-details h3 span { color: var(--warm-gold); }
+        .promo-left-details .value-sub { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
+        .promo-left-details .desc-p { color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; }
+        .btn-promo-claim { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #011625; color: var(--warm-gold); border: 2px solid var(--warm-gold); padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; text-transform: uppercase; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.3); margin-top: 0.5rem; width: max-content; font-family: var(--font-primary); }
+        .btn-promo-claim:hover { background: var(--warm-gold); color: var(--deep-navy); }
+        .promo-limit-disclaimer { font-size: 0.8rem; color: var(--sky-blue); display: flex; align-items: center; gap: 6px; }
+
+        .promo-mid-deliverables { display: flex; flex-direction: column; gap: 1rem; height: 100%; justify-content: space-between; border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1); padding: 0 2rem; }
+        .promo-mid-section-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--sky-blue); letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.4rem; }
+        .sub-promo-box { background: rgba(1, 22, 37, 0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem; display: flex; gap: 12px; align-items: flex-start; }
+        .sub-promo-box i { font-size: 1.4rem; color: var(--warm-gold); }
+        .sub-promo-box h4 { font-size: 0.9rem; text-transform: uppercase; color: #ffffff; margin-bottom: 0.3rem; }
+        .sub-promo-box ul { list-style: none; }
+        .sub-promo-box ul li { font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; gap: 6px; margin-bottom: 0.2rem; }
+        .sub-promo-box ul li i { color: var(--ocean-blue); font-size: 0.75rem; }
+        .sub-promo-box p { font-size: 0.85rem; color: #cbd5e1; line-height: 1.4; }
+
+        .promo-right-target { display: flex; flex-direction: column; gap: 1rem; padding-left: 0.5rem; height: 100%; justify-content: space-between; }
+        .promo-right-target ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .promo-right-target ul li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: #e2e8f0; font-weight: 700; }
+        .promo-right-target ul li i { color: var(--warm-gold); font-size: 0.9rem; }
+        .no-commit-notice-box { background: rgba(255, 183, 3, 0.05); border: 1px dashed var(--warm-gold); border-radius: 12px; padding: 1rem; display: flex; gap: 12px; align-items: flex-start; }
+        .no-commit-notice-box i { color: var(--warm-gold); font-size: 1.3rem; margin-top: 2px; }
+        .no-commit-notice-box h5 { font-size: 0.85rem; text-transform: uppercase; color: var(--warm-gold); margin-bottom: 0.2rem; }
+        .no-commit-notice-box p { font-size: 0.8rem; color: #cbd5e1; line-height: 1.3; }
+
+        /* --- SERVICES GRID --- */
+        .services-layout-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 5rem; }
+        .service-box-item { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem 2rem; position: relative; cursor: pointer; backdrop-filter: blur(8px); transition: transform 0.3s ease, border-color 0.3s ease; }
+        .service-box-item:hover { transform: scale(1.03); border-color: var(--warm-gold); }
+        .service-icon-heading { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; }
+        .service-icon-heading i { font-size: 2rem; color: var(--vibrant-orange); }
+        .service-box-item ul { list-style: none; }
+        .service-box-item ul li { font-size: 1rem; color: #e2e8f0; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 10px; }
+        .service-box-item ul li::before { content: "✓"; color: var(--sky-blue); font-weight: bold; }
+
+        .service-video-popup { position: absolute; bottom: -100%; left: 50%; transform: translateX(-50%) scale(0.8); width: 90%; height: 160px; background: #023047; border: 2px solid var(--warm-gold); border-radius: 12px; opacity: 0; visibility: hidden; z-index: 10; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .service-box-item:hover .service-video-popup { bottom: 15px; opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); }
+        .service-video-popup video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-fallback-ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(2,48,71,0.9), rgba(33,158,188,0.9)); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 1rem; pointer-events: none; }
+        .video-fallback-ui p { font-size: 0.85rem; color: #ffffff; font-weight: bold; margin-top: 4px; }
+
+        /* --- FREQUENTLY ASKED QUESTIONS SECTION --- */
+        .faq-accordion-section { max-width: 950px; margin: 0 auto; }
+        .faq-category-cluster { margin-bottom: 2.5rem; }
+        .faq-category-title { font-size: 1.1rem; color: var(--warm-gold); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem; }
+        .faq-row-item { background: rgba(2, 48, 71, 0.3); border: 1px solid var(--glass-border); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        .faq-trigger-header { padding: 1.1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .faq-trigger-header:hover { background: rgba(142, 202, 230, 0.06); }
+        .faq-trigger-header h4 { font-size: 1rem; color: #ffffff; font-family: var(--font-secondary); font-weight: 700; padding-right: 1rem; line-height: 1.4; }
+        .faq-chevron-icon { font-size: 0.9rem; color: var(--sky-blue); transition: transform 0.3s ease; }
+        .faq-expansion-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0, 1, 0, 1); background: rgba(1, 22, 37, 0.4); }
+        .faq-expansion-panel .inner-panel-text { padding: 1.25rem 1.5rem; font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.05); }
+        
+        .faq-row-item.faq-active { border-color: var(--sky-blue); box-shadow: 0 4px 20px rgba(142,202,230,0.1); }
+        .faq-row-item.faq-active .faq-chevron-icon { transform: rotate(180deg); color: var(--warm-gold); }
+        .faq-row-item.faq-active .faq-expansion-panel { max-height: 1000px; transition: max-height 0.5s ease-in-out; }
+
+        /* --- REDESIGNED ULTRA-LOW LENGTH SLIM FOOTER --- */
+        footer { background: #010c14; border-top: 1px solid var(--glass-border); padding: 1.2rem 2rem 0.8rem 2rem; font-size: 0.85rem; margin-top: 5rem; }
+        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; text-align: left; padding-bottom: 1rem; }
+        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+        .footer-col ul li a { color: #cbd5e1; text-decoration: none; transition: color 0.3s ease; display: block; line-height: 1.2; }
+        .footer-col ul li a:hover { color: var(--sky-blue); }
+        .footer-col p { color: #cbd5e1; line-height: 1.3; }
+        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; margin-bottom: 0.5rem; list-style: none; }
+        .footer-social-row a { color: #ffffff; font-size: 1.2rem; transition: all 0.3s ease; }
+        .footer-social-row a:hover { transform: translateY(-2px); }
+        .footer-social-row .inst:hover { color: #E1306C; }
+        .footer-social-row .lnk:hover { color: #0077B5; }
+        .footer-social-row .ytb:hover { color: #FF0000; }
+        .footer-social-row .wts:hover { color: #25D366; }
+        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; }
+
+        @media (max-width: 1150px) { .nav-menu { gap: 1rem; } .nav-link { font-size: 0.85rem; } .logo-title-text { font-size: 1rem; } }
+        @media (max-width: 1024px) {
+            .promo-container-card { grid-template-columns: 1fr; gap: 2rem; }
+            .promo-mid-deliverables { border-left: none; border-right: none; padding: 0; gap: 1rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+        @media (max-width: 480px) { .logo-title-text { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="video-bg-container"><video src="videos/services-bg-data.mp4" autoplay loop muted playsinline></video><div class="video-overlay-tint"></div></div>
+
+    <header>
+        <div class="nav-container">
+            <a class="logo-area" href="index.html">
+                <img class="logo-img" src="images/logo-new.png" alt="Mappin-Out Logo">
+                <div class="logo-title-text">Mappinout <span>Digital Solutions</span></div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li><a href="services.html" class="nav-link active">Services</a></li>
+                <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li><a href="autonomous.html" class="nav-link">Autonomous System</a></li>
+                <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="main-container">
+        
+        <!-- POSITION 1: AUDIT PROMOTION CONTAINER (image_d7091f.jpg) -->
+        <div class="promo-container-card">
+            <div class="promo-left-details">
+                <div class="promo-icon-title-row">
+                    <div class="promo-main-icon-badge"><i class="fa-solid fa-gift"></i></div>
+                    <h3>FREE CONTENT<br><span>AUDIT + SAMPLE REEL</span></h3>
+                </div>
+                <p class="value-sub">We prove our value before you commit.</p>
+                <p class="desc-p">Get a professional audit of your content & a custom edited reel – completely free.</p>
+                <a href="contact.html" class="btn-promo-claim">Claim Your Free Audit &rarr;</a>
+                <div class="promo-limit-disclaimer"><i class="fa-regular fa-clock"></i> Limited to 5 businesses per month</div>
+            </div>
+
+            <div class="promo-mid-deliverables">
+                <div class="promo-mid-section-title">What You'll Get</div>
+                <div class="sub-promo-box">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <div>
+                        <h4>Free Content Audit</h4>
+                        <ul>
+                            <li><i class="fa-solid fa-check"></i> Profile & Brand Review</li>
+                            <li><i class="fa-solid fa-check"></i> Content Quality Analysis</li>
+                            <li><i class="fa-solid fa-check"></i> Growth Opportunities</li>
+                            <li><i class="fa-solid fa-check"></i> Actionable Recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sub-promo-box">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <div>
+                        <h4>1 Sample Reel</h4>
+                        <p>Send us your raw footage and we'll create 1 professionally edited reel for you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="promo-right-target">
+                <div>
+                    <div class="promo-mid-section-title" style="margin-bottom:1rem;">Who Is This For?</div>
+                    <ul>
+                        <li><i class="fa-solid fa-user"></i> Startups</li>
+                        <li><i class="fa-solid fa-user"></i> Personal Brands</li>
+                        <li><i class="fa-solid fa-user"></i> Coaches & Educators</li>
+                        <li><i class="fa-solid fa-user"></i> Business Owners</li>
+                        <li><i class="fa-solid fa-user"></i> Content Creators</li>
+                    </ul>
+                </div>
+                <div class="no-commit-notice-box">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div>
+                        <h5>No Commitment Required</h5>
+                        <p>Experience our process, understand your growth opportunities, and see the quality of our work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POSITION 2: SERVICE SECTION HEADER -->
+        <div class="section-header"><h2>Our Services</h2></div>
+
+        <!-- POSITION 3: CORE SERVICES DISPLAY GRID -->
+        <div class="services-layout-grid">
+            <div class="service-box-item">
+                <div class="service-icon-heading"><i class="fa-solid fa-chess-knight"></i><h3>Strategy & Consulting</h3></div>
+                <ul><li>Brand positioning</li><li>Content strategy</li><li>Market research</li><li>Campaign planning</li></ul>
+                <div class="service-video-popup">
+                    <video src="videos/popup-strategy.mp4" loop muted playsinline></video>
+                    <div class="video-fallback-ui"><i class="fa-solid fa-chart-pie" style="color:var(--warm-gold)"></i><p>Strategy Analytics</p></div>
+                </div>
+            </div>
+            <div class="service-box-item">
+                <div class="service-icon-heading"><i class="fa-solid fa-video"></i><h3>Content Production</h3></div>
+                <ul><li>Reels / short-form videos</li><li>YouTube videos</li><li>Ad creatives</li><li>Product shoots</li></ul>
+                <div class="service-video-popup">
+                    <video src="videos/popup-content.mp4" loop muted playsinline></video>
+                    <div class="video-fallback-ui"><i class="fa-solid fa-photo-film" style="color:var(--warm-gold)"></i><p>Media Production</p></div>
+                </div>
+            </div>
+            <div class="service-box-item">
+                <div class="service-icon-heading"><i class="fa-solid fa-bezier-curve"></i><h3>Design & Branding</h3></div>
+                <ul><li>Logo design</li><li>Brand identity</li><li>Posters / creatives</li><li>UI/UX Engineering</li></ul>
+                <div class="service-video-popup">
+                    <video src="videos/popup-design.mp4" loop muted playsinline></video>
+                    <div class="video-fallback-ui"><i class="fa-solid fa-compass-drafting" style="color:var(--warm-gold)"></i><p>Branding Lab</p></div>
+                </div>
+            </div>
+            <div class="service-box-item">
+                <div class="service-icon-heading"><i class="fa-solid fa-share-nodes"></i><h3>Social Media Management</h3></div>
+                <ul><li>Posting & scheduling</li><li>Engagement handling</li><li>Community management</li><li>Growth strategy</li></ul>
+                <div class="service-video-popup">
+                    <video src="videos/popup-social.mp4" loop muted playsinline></video>
+                    <div class="video-fallback-ui"><i class="fa-solid fa-hashtag" style="color:var(--warm-gold)"></i><p>Social Engine</p></div>
+                </div>
+            </div>
+            <div class="service-box-item">
+                <div class="service-icon-heading"><i class="fa-solid fa-gauge-high"></i><h3>Performance Marketing</h3></div>
+                <ul><li>Facebook/Instagram ads</li><li>Google ads</li><li>Funnel building</li><li>Lead generation</li></ul>
+                <div class="service-video-popup">
+                    <video src="videos/popup-marketing.mp4" loop muted playsinline></video>
+                    <div class="video-fallback-ui"><i class="fa-solid fa-bullseye" style="color:var(--warm-gold)"></i><p>Campaign Pipeline</p></div>
+                </div>
+            </div>
+            <div class="service-box-item">
+                <div class="service-icon-heading"><i class="fa-solid fa-robot"></i><h3>Automation & Tech</h3></div>
+                <ul><li>CRM architectures</li><li>Marketing automation</li><li>Analytics dashboards</li></ul>
+                <div class="service-video-popup">
+                    <video src="videos/popup-automation.mp4" loop muted playsinline></video>
+                    <div class="video-fallback-ui"><i class="fa-solid fa-gears" style="color:var(--warm-gold)"></i><p>Automation Stack</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POSITION 4: MASTER COMPREHENSIVE FAQS SEGMENT -->
+        <div class="section-header" style="margin-top:4rem; margin-bottom:2rem;"><h2>Frequently Asked Questions</h2></div>
+        <div class="faq-accordion-section">
+            
+            <!-- Category Cluster 1: CRM & Automation -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-gears"></i> Automation, Systems & CRM Integration</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>CRM integration with existing business tools</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Connecting CRM tracking pipelines with your primary operational communication interfaces dynamically unifies client messaging data flows, prevents sales processing gaps, and maximizes structural pipeline efficiency.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Affordable marketing automation software with AI capabilities</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">AI integration modules automatically handle repetitive lead parsing vectors, parse consumer engagement metrics, and optimize outbound content distribution sequences with zero human error margins.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Top marketing automation tools suitable for Indian startups</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Indian scaling modules prioritize localized cross-channel connectivity tools, WhatsApp transaction API relays, clear audience segmentation dashboards, and affordable performance scaling architecture.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best CRM systems for small businesses in India</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">The best regional infrastructures integrate responsive data dashboards, customizable customer interaction logging, mobile-first cloud access metrics, and direct lead generation funnel monitoring links.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 2: Brand Positioning -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-chess-knight"></i> Brand Positioning & Strategy</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How do top companies define their brand positioning strategies?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Global enterprises extract distinct audience data values, map market competitor deficiencies, and embed targeted niche value parameters into their overarching brand identification structures.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>What is brand positioning and why is it important for new businesses?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Positioning forms the central mental space your organization commands in your target demographic's mind. It clarifies your message, sets expectations, and drives initial organic audience awareness cleanly.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>brand positioning marketing</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Successful positioning operations map brand vision blueprints across high-impact ad creatives, cohesive graphic assets, and social platform communication tracks to capture consistent market volume metrics.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>brand positioning meaning</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">It means framing your structural problem-solving limits, creative identities, and functional services values into a tight conceptual system that links perfectly to consumer demand behaviors.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 3: Content Strategy -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-pen-nib"></i> Content Strategy Frameworks</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best tools for creating a content strategy for small businesses</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Small ventures leverage keyword tracking index matrices, semantic trend trackers, automated content calendar builders, and social analytics suites to formulate predictable organic traffic frameworks.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best practices for developing a comprehensive content strategy</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Sustainable architectures maintain deep market segment research, continuous metric tracking loops, diversified distribution networks, and strong topic grouping mapping parameters.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>content strategy Instagram</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Instagram systems rely heavily on target viral reels structure planning, interactive caption optimization formatting, eye-catching ad visuals, and direct conversion-focused calls to action.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>content strategy in seo</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">SEO frameworks balance high-intent search query optimization, semantic cluster links networks, technical website interface responsiveness, and steady content updates loops.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 4: Market Research -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-magnifying-glass-chart"></i> Market Research Techniques</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>What are the top tools used for market research by small businesses?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Venues track audience behavioral patterns using global trends indexing suites, online customer intent boards, social interaction parsing software, and specialized web analytical nodes.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to conduct effective market research for a new product launch?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Launches run research-driven steps checking consumer demand indicators, competitor positioning maps, optimal pricing model limits, and localized platform acquisition gaps.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>market research techniques</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Core methods utilize targeted audience focus group tracking, contextual user surveys, continuous competitor visual monitoring, and historical performance ads dataset parsing.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>market research tools</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">These analytical engines automatically pull customer intent indicators, keyword densities records, and demographic engagement shifts into centralized reporting dashboards.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 5: Campaign Planning -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-bullhorn"></i> Campaign Planning & Software</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best tools for digital campaign planning and management</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Campaign managers map assets using visual timeline toolkits, multi-channel performance tracking modules, asset variant repositories, and budget tracking systems.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>What are the leading software solutions for campaign project management?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Enterprise campaign project management programs map out creation tasks pipelines, maintain multi-user calendar schedules, clear task dependencies bottlenecks, and track cross-platform delivery metrics.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>campaign planning template</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">A strategic blueprint maps core launch objectives, clear channel distribution arrays, audience positioning targets, ad creative variations, and daily conversion tracking matrices.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>campaign planning tools</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">These structural tools synchronize cross-platform performance tracking metrics, budget constraints parameters, visual ad creative revisions tracking, and landing page funnel routes.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 6: Video Production & Ad Creatives -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-film"></i> Video Production & Ad Creatives</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best free apps for editing short-form videos</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Mobile production utilizes cloud-ready timeline tools that carry automated audio transcription loops, quick multi-format canvas configurations, template filters, and smooth transition assets.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Software recommendations for editing engaging video advertisements</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Professional post-production programs deploy motion graphics capabilities, detailed color matching layers, non-destructive soundtrack syncing, and precision video format export engines.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to design effective ad creatives that boost online sales</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">High-converting ad assets embed immediate visual hooks in the initial 3 seconds, deploy crisp mobile aspect ratio frames, address user friction points directly, and present absolute click call-to-actions.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best camera gear for starting a YouTube channel</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Starting frameworks combine mirrorless cameras with automatic focus tracking tracking, high-fidelity unidirectional microphones, balanced studio softbox panels, and reliable desktop editing interfaces.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best platforms for creating engaging YouTube videos for product marketing</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Product creators capture high-definition sequence modules and utilize cloud render farms, template graphic arrays, and video metadata analytics tools to accelerate delivery speeds.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 7: Branding & Graphics -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-palette"></i> Design, Logo & Brand Identity</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best practices for modern logo design?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Modern identity development focuses on bold vector icon clean lines, strict layout scalability across print and mobile formats, custom distinct typography balance, and stark color theme optimization rules.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to design eye-catching posters for social media marketing campaigns</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Eye-catching creative graphics integrate extreme typographic text contrast ratios, high-intensity color palettes, clear element alignment paths, and single focused messaging vectors.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to create a memorable logo for a startup?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Memorable corporate identifiers translate core company solutions directly into a clean, minimal graphic shape structure, eliminating unnecessary visual elements to maintain rapid customer recognition.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best practices for creating a cohesive brand identity through logo design</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Cohesive systems set specific brand style manual benchmarks governing asset color codes grid models, standardized typography usage configurations, asset proximity parameters, and layout application guidelines.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 8: UI/UX Interfaces -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-bezier-curve"></i> UI/UX Interface Principles</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>What are the fundamental principles of good UI design?</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Good interface architecture relies on predictive user path structures, extreme contrast element systems, clear action button visibility indicators, and persistent component sizing standards.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best tools for designing ui/ux interfaces</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">UX engineers prototype high-converting designs using modern cloud layout vector programs, real-time collaboration canvas frameworks, components library tools, and user test video capture modules.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>ui/ux designer salary</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Compensation scales directly based on technical interface logic efficiency parameters, historical optimization conversions datasets tracking expertise, prototype build velocity scores, and systemic design asset library leadership metrics.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>ui/ux designer</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">A modern interaction engineer builds digital customer wireframes loops, maps interface navigation links pathways, runs user interaction click tests, and streamlines layout component configurations.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 9: Social Curation -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-share-nodes"></i> Social Media Curation & Scheduling</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to create an effective social media content calendar</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">An effective content scheduling structure coordinates content topic tracks, asset generation milestones deadlines, multi-platform publishing slots tracking vectors, and conversion link parameters.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to handle engagement effectively on multiple social media platforms</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Unified dashboard modules feed inbound client text strings and social comments streams into a single responsive message hub, accelerating target response speed parameters cleanly.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best platforms for automated social media content delivery</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Advanced curation tools deploy automatic data cloud triggers, specific audience zone timezone delivery loops, and auto-publishing relays to eliminate daily maintenance needs.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best tools for automated posting and scheduling on social media</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Leading distribution structures combine post asset queuing arrays, media variant preview render systems, and robust cross-platform API connectivity relays to ensure dependable output flows.</div></div>
+                </div>
+            </div>
+
+            <!-- Category Cluster 10: Funnels & Conversion -->
+            <div class="faq-category-cluster">
+                <div class="faq-category-title"><i class="fa-solid fa-funnel-dollar"></i> Funnels, Leads & Ad Visuals</div>
+                
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Top tools for building lead generation funnels efficiently</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">High-converting setups deploy fast-loading landing page modules, immediate lead parsing data capture nodes, real-time conversion monitoring analytics, and direct webhooks integrations.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to set up effective audience targeting on popular visual social platforms</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Targeting maps isolate user intent tracking coordinates, lookalike behavioral attributes patterns, custom local demographic filters, and specific device configuration metrics to lock campaigns down accurately.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>How to create high-converting sales funnels for online marketing</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Successful conversions route users from interactive social ad graphics into a clear single-focus lander environment, offering an instant scheduling trigger link to reduce audience drop-off markers.</div></div>
+                </div>
+                <div class="faq-row-item">
+                    <div class="faq-trigger-header"><h4>Best practices for creating highly engaging social media ad visuals</h4><i class="fa-solid fa-chevron-down faq-chevron-icon"></i></div>
+                    <div class="faq-expansion-panel"><div class="inner-panel-text">Engagement requires matching striking asset graphics to your palette system parameters, utilizing prominent text title hierarchies, maintaining extreme clarity indicators, and choosing jackpot digital distribution options.</div></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="autonomous.html">Autonomous System</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="services.html">Strategy & Consulting</a></li><li><a href="services.html">Content Production</a></li><li><a href="services.html">Design & Branding</a></li><li><a href="services.html">Social Media Management</a></li><li><a href="services.html">Performance Marketing</a></li><li><a href="services.html">Automation & Tech</a></li></ul></div>
+            <div class="footer-col"><h4>Address</h4><p><i class="fa-solid fa-location-dot" style="color:var(--warm-gold); margin-right:5px;"></i> Coimbatore, Tamil Nadu, India</p></div>
+        </div>
+        <ul class="footer-social-row">
+            <li><a href="https://www.instagram.com/mappinout_25?igsh=MTJ6ZjJ2Y2ltdTQzbw==" class="inst" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" class="lnk" aria-label="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            <li><a href="https://youtube.com/@mappin-out?si=DnpauxiVIUIoTYyb" class="ytb" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+            <li><a href="https://wa.me/9952680230" class="wts" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+        </ul>
+        <div class="footer-copy">&copy; 2026 Mappin-Out Digital Solutions. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        // Hover video loop handler configuration 
+        document.querySelectorAll('.service-box-item').forEach(box => {
+            const video = box.querySelector('.service-video-popup video');
+            box.addEventListener('mouseenter', () => { 
+                if (video) {
+                    video.currentTime = 0; 
+                    var playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(error => { console.log("Playback loop configuration loaded."); });
+                    }
+                } 
+            });
+            box.addEventListener('mouseleave', () => { if (video) { video.pause(); video.currentTime = 0; } });
+        });
+
+        // Interactive Accordion Controller for FAQs Section
+        document.querySelectorAll('.faq-trigger-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const parentRow = header.parentElement;
+                const isCurrentlyActive = parentRow.classList.contains('faq-active');
+                
+                const cluster = parentRow.parentElement;
+                cluster.querySelectorAll('.faq-row-item').forEach(row => {
+                    row.classList.remove('faq-active');
+                });
+                
+                if (!isCurrentlyActive) {
+                    parentRow.classList.add('faq-active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
