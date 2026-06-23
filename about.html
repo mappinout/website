@@ -13,44 +13,60 @@
             --sky-blue: #8ECAE6; --ocean-blue: #219EBC; --deep-navy: #023047;
             --warm-gold: #FFB703; --vibrant-orange: #FB8500;
             --font-primary: 'Mirano', 'Arial Black', sans-serif; --font-secondary: 'PT Sans', sans-serif;
-            --glass-bg: rgba(2, 48, 71, 0.6); --glass-border: rgba(142, 202, 230, 0.2);
+            --glass-bg: rgba(2, 48, 71, 0.45); --glass-border: rgba(142, 202, 230, 0.15);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-secondary); background-color: #011625; color: #ffffff; }
+        body { font-family: var(--font-secondary); background-color: #011625; color: #ffffff; overflow-x: hidden; min-height: 100vh; }
         h1, h2, h3, h4 { font-family: var(--font-primary); }
-        
+
         .video-bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
         .video-bg-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.18; filter: blur(2px); }
         .video-overlay-tint { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(1,22,37,0.92), rgba(2,48,71,0.9)); z-index: -1; }
 
-        /* --- FIXED STANDARDIZED HEADER SYSTEM --- */
-        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(1, 22, 37, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); height: 80px; }
-        .nav-container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
-        
-        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; height: 100%; flex-shrink: 0; }
-        .logo-img { height: 50px; width: auto; object-fit: contain; display: block; }
-        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: block; }
+        /* --- STREATED TO CORNERS NAVIGATION CSS PATCH --- */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: #01111c; border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(12px); height: 80px; }
+        .nav-container { max-width: 100%; margin: 0 auto; padding: 0 3rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; height: 100%; }
+        .logo-img { height: 50px; width: 50px; object-fit: cover; border-radius: 50%; border: 2px solid var(--glass-border); flex-shrink: 0; }
+        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; }
         .logo-title-text span { color: var(--vibrant-orange); }
+
+        .nav-menu { display: flex; gap: 2.2rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
+        .nav-menu li { position: relative; display: flex; align-items: center; height: 100%; }
+
         
-        .nav-menu { display: flex; gap: 1.5rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
-        .nav-menu li { display: block; white-space: nowrap; }
-        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; position: relative; padding: 0.5rem 0; display: block; line-height: 1; letter-spacing: 0.5px; }
+
+        
+        /* Brought item padding down slightly so hover lines display close to the text rules */
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.4rem 0; display: inline-block; position: relative; }
         .nav-link:hover { color: var(--warm-gold); }
-        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--warm-gold); transition: width 0.3s ease; }
+
+        .nav-link::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 3px; background-color: var(--warm-gold); transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .nav-link:hover::after { width: 100%; }
+
+        /* --- COMPACT DROPDOWN SELECTION PANEL (index.html version) --- */
+        .nav-item-dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .standard-dropdown-box { position: absolute; top: 65px; left: 50%; transform: translateX(-50%) translateY(15px); width: 320px; background: #01111c; border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem 0; box-shadow: 0 15px 35px rgba(0,0,0,0.7); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); pointer-events: none; z-index: 1100; }
+        .nav-item-dropdown:hover .standard-dropdown-box { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+        .standard-dropdown-box ul { list-style: none; display: flex; flex-direction: column; width: 100%; padding: 0; margin: 0; }
+        .standard-dropdown-box ul li { width: 100%; display: block; height: auto; }
+        .standard-dropdown-box ul li a { color: #cbd5e1; text-decoration: none; font-size: 0.88rem; font-weight: 700; padding: 0.8rem 1.5rem; display: block; line-height: 1.4; text-transform: none; transition: all 0.2s ease; text-align: left; }
+        .standard-dropdown-box ul li a:hover { color: var(--warm-gold); background: rgba(142, 202, 230, 0.08); padding-left: 1.8rem; }
+        .menu-toggle { display: none; font-size: 1.6rem; color: #ffffff; cursor: pointer; z-index: 1100; }
+
 
         .main-container { max-width: 1200px; margin: 0 auto; padding: 140px 2rem 60px 2rem; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header h2 { font-size: 2.5rem; display: inline-block; position: relative; }
         .section-header h2::after { content: ''; display: block; width: 60%; height: 3px; background: linear-gradient(90deg, var(--ocean-blue), var(--vibrant-orange)); margin: 10px auto 0; }
 
-        .statement-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem; margin-bottom: 4rem; backdrop-filter: blur(8px); }
+        .statement-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem; margin-bottom: 5rem; backdrop-filter: blur(8px); }
         .statement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-        .statement-box h3 { color: var(--warm-gold); font-size: 1.6rem; margin-bottom: 1rem; }
+        .statement-box h3 { color: var(--sky-blue); font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+        .statement-box p { font-size: 1.05rem; color: #cbd5e1; line-height: 1.6; }
 
-        .team-title { text-align: center; font-size: 2rem; margin-bottom: 2.5rem; color: var(--sky-blue); }
+        .team-title { text-align: center; font-size: 2rem; margin-bottom: 2.5rem; color: var(--sky-blue); text-transform: uppercase; }
         .team-container-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2rem; }
-        
         .team-member-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2.5rem 1.5rem; text-align: center; backdrop-filter: blur(8px); transition: all 0.4s ease; position: relative; overflow: hidden; }
         .team-member-card:nth-child(1) { grid-column: 1 / 3; }
         .team-member-card:nth-child(2) { grid-column: 3 / 5; }
@@ -61,31 +77,34 @@
         
         .avatar-image-frame { width: 110px; height: 110px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 3px solid var(--sky-blue); background: #023047; }
         .avatar-image-frame img { width: 100%; height: 100%; object-fit: cover; }
-
         .team-member-card h4 { font-size: 1.2rem; margin-bottom: 0.2rem; }
-        .team-member-card .role-title { font-size: 0.85rem; color: var(--warm-gold); font-weight: bold; text-transform: uppercase; margin-bottom: 0.4rem; }
-        .team-member-card p { font-size: 0.95rem; color: #cbd5e1; }
+        .team-member-card .role-title { font-size: 0.85rem; color: var(--warm-gold); font-weight: bold; text-transform: uppercase; margin-bottom: 0.4rem; letter-spacing: 0.5px; }
+        .team-member-card p { font-size: 0.95rem; color: #cbd5e1; line-height: 1.5; }
 
-        /* --- REDESIGNED ULTRA-LOW LENGTH SLIM FOOTER --- */
         footer { background: #010c14; border-top: 1px solid var(--glass-border); padding: 1.2rem 2rem 0.8rem 2rem; font-size: 0.85rem; }
-        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; text-align: left; padding-bottom: 1rem; }
-        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; }
+        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; }
         .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
-        .footer-col ul li a { color: #cbd5e1; text-decoration: none; transition: color 0.3s ease; display: block; line-height: 1.2; }
+        .footer-col ul li a { color: #cbd5e1; text-decoration: none; display: block; }
         .footer-col ul li a:hover { color: var(--sky-blue); }
-        .footer-col p { color: #cbd5e1; line-height: 1.3; }
-        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; margin-bottom: 0.5rem; list-style: none; }
-        .footer-social-row a { color: #ffffff; font-size: 1.2rem; transition: all 0.3s ease; }
-        .footer-social-row a:hover { transform: translateY(-2px); }
-        .footer-social-row .inst:hover { color: #E1306C; }
-        .footer-social-row .lnk:hover { color: #0077B5; }
-        .footer-social-row .ytb:hover { color: #FF0000; }
-        .footer-social-row .wts:hover { color: #25D366; }
-        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; }
+        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; list-style: none; }
+        .footer-social-row a { color: #ffffff; font-size: 1.2rem; }
+        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; margin-top: 0.5rem; }
 
-        @media (max-width: 1150px) { .nav-menu { gap: 1rem; } .nav-link { font-size: 0.85rem; } .logo-title-text { font-size: 1rem; } }
+        @media (max-width: 991px) { .nav-container { padding: 0 1.5rem; } .nav-menu { gap: 1.2rem; } }
         @media (max-width: 1024px) { .statement-grid, .footer-grid { grid-template-columns: 1fr; gap: 2rem; } .team-container-grid { grid-template-columns: repeat(4, 1fr); } .team-member-card:nth-child(1), .team-member-card:nth-child(2), .team-member-card:nth-child(3), .team-member-card:nth-child(4) { grid-column: span 2; } .team-member-card:nth-child(5) { grid-column: 2 / 4; } }
-        @media (max-width: 768px) { .team-container-grid { grid-template-columns: 1fr; } .team-member-card:nth-child(n) { grid-column: auto; } }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-menu { position: fixed; top: 80px; left: -100%; width: 100%; height: calc(100vh - 80px); background: #01111c; flex-direction: column; align-items: center; padding: 2rem 0; gap: 0rem; overflow-y: auto; transition: left 0.4s ease; }
+            .nav-menu.mobile-open { left: 0; }
+            .nav-menu li { width: 100%; display: block; text-align: center; height: auto; }
+            .nav-link { padding: 1.2rem 0; width: 100%; }
+            .nav-link::after { display: none; }
+            .standard-dropdown-box { position: relative; top: 0; left: 0; transform: none; width: 100%; display: none; background: rgba(0,0,0,0.25); box-shadow: none; border: none; padding: 0; }
+            .nav-item-dropdown:hover .standard-dropdown-box { display: block; }
+            .standard-dropdown-box ul li a { text-align: center; padding: 0.8rem 1rem; }
+            .team-container-grid { grid-template-columns: 1fr; } .team-member-card:nth-child(n) { grid-column: auto; }
+        }
         @media (max-width: 480px) { .logo-title-text { display: none; } }
     </style>
 </head>
@@ -98,9 +117,19 @@
                 <img class="logo-img" src="images/logo-new.png" alt="Mappin-Out Logo">
                 <div class="logo-title-text">Mappinout <span>Digital Solutions</span></div>
             </a>
-            <ul class="nav-menu">
+            <i class="fa-solid fa-bars menu-toggle" onclick="toggleMenu()"></i>
+            <ul class="nav-menu" id="navLinks">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item-dropdown">
+                    <a href="about.html" class="nav-link">About Us <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:2px;"></i></a>
+                    <div class="standard-dropdown-box">
+                        <ul>
+                            <li><a href="why-choose-us.html">Why Choose Us?</a></li>
+                            <li><a href="what-makes-us-different.html">What Makes Us Different?</a></li>
+                            <li><a href="why-free-audit.html">Why We Offer A Free Content Audit + Sample Reel?</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
                 <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
                 <li><a href="pricing.html" class="nav-link">Pricing</a></li>
@@ -112,6 +141,7 @@
 
     <main class="main-container">
         <div class="section-header"><h2>About Us</h2></div>
+        
         <div class="statement-card">
             <div class="statement-grid">
                 <div class="statement-box">
@@ -127,10 +157,10 @@
 
         <h3 class="team-title">Our Leadership Team</h3>
         <div class="team-container-grid">
-            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/CEO.png" alt="Chief Executive Officer"></div><h4>Chief Executive Officer</h4><div class="role-title">BRAND VISION & GROWTH</div><p>Drives overall corporate direction, aligning business scaling structures with technical marketing execution parameters.</p></div>
-            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/COO.jpeg" alt="Chief Operating Officer"></div><h4>Chief Operating Officer</h4><div class="role-title">OPERATIONS & MANAGEMENT</div><p>Manages daily workflows, optimizing service fulfillment pipelines and ensuring smooth campaign execution models.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/CEO.png" alt="CEO"></div><h4>Chief Executive Officer</h4><div class="role-title">BRAND VISION & GROWTH</div><p>Drives overall corporate direction, aligning business scaling structures with technical marketing execution parameters.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/COO.jpeg" alt="COO"></div><h4>Chief Operating Officer</h4><div class="role-title">OPERATIONS & MANAGEMENT</div><p>Manages daily workflows, optimizing service fulfillment pipelines and ensuring smooth campaign execution models.</p></div>
             <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Graphic Designer.jpeg" alt="Graphic Designer"></div><h4>Graphic Designer</h4><div class="role-title">VISUAL IDENTITY</div><p>Crafting layouts, social assets, and designs that build a strong brand presence and look stunning.</p></div>
-            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Editor.jpeg" alt="Editor"></div><h4>Editor</h4><div class="role-title">POST-PRODUCTION</div><p>Modifying pacing, visual framing, and audio structures for high-performance organic short-form reels.</p></div>
+            <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Editor.jpeg" alt="Video Editor"></div><h4>Video Editor</h4><div class="role-title">POST-PRODUCTION</div><p>Modifying pacing, visual framing, and audio structures for high-performance organic short-form reels.</p></div>
             <div class="team-member-card"><div class="avatar-image-frame"><img src="images/Content Strategist.jpeg" alt="Content Strategist"></div><h4>Content Strategist</h4><div class="role-title">AUDIENCE ENGAGEMENT</div><p>Researching audience opportunities to build customized roadmaps and structured content plans for brands.</p></div>
         </div>
     </main>
@@ -138,16 +168,21 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="autonomous.html">Autonomous System</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
-            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="services.html">Strategy & Consulting</a></li><li><a href="services.html">Content Production</a></li><li><a href="services.html">Design & Branding</a></li><li><a href="services.html">Social Media Management</a></li><li><a href="services.html">Performance Marketing</a></li><li><a href="services.html">Automation & Tech</a></li></ul></div>
+            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="service-strategy.html">Strategy & Consulting</a></li><li><a href="service-production.html">Content Production</a></li><li><a href="service-branding.html">Design & Branding</a></li><li><a href="service-social.html">Social Media Management</a></li><li><a href="service-marketing.html">Performance Marketing</a></li><li><a href="service-automation.html">Automation & Tech</a></li></ul></div>
             <div class="footer-col"><h4>Address</h4><p><i class="fa-solid fa-location-dot" style="color:var(--warm-gold); margin-right:5px;"></i> Coimbatore, Tamil Nadu, India</p></div>
         </div>
         <ul class="footer-social-row">
-            <li><a href="https://www.instagram.com/mappinout_25?igsh=MTJ6ZjJ2Y2ltdTQzbw==" class="inst" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" class="lnk" aria-label="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
-            <li><a href="https://youtube.com/@mappin-out?si=DnpauxiVIUIoTYyb" class="ytb" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
-            <li><a href="https://wa.me/9952680230" class="wts" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+            <li><a href="https://www.instagram.com/mappinout_25" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            <li><a href="https://youtube.com/@mappin-out" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+            <li><a href="https://wa.me/9952680230" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
         </ul>
         <div class="footer-copy">&copy; 2026 Mappin-Out Digital Solutions. All Rights Reserved.</div>
     </footer>
+    <script>
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('mobile-open'); }
+    </script>
+
 </body>
 </html>
+

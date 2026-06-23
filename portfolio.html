@@ -23,119 +23,84 @@
         .video-bg-container video { width: 100%; height: 100%; object-fit: cover; opacity: 0.15; filter: blur(2px); }
         .video-overlay-tint { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(1,22,37,0.96), rgba(2,48,71,0.9)); z-index: -1; }
 
-        /* --- HEADER NAVIGATION --- */
-        header { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(1, 22, 37, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); height: 80px; }
-        .nav-container { max-width: 1240px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
-        .logo-area { display: flex; align-items: center; gap: 12px; text-decoration: none; height: 100%; flex-shrink: 0; }
-        .logo-img { height: 50px; width: auto; object-fit: contain; display: block; }
-        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap; display: block; }
+       header { position: fixed; top: 0; width: 100%; z-index: 1000; background: #01111c; border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(12px); height: 80px; }
+        .nav-container { max-width: 100%; margin: 0 auto; padding: 0 3rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; height: 100%; }
+        .logo-img { height: 50px; width: 50px; object-fit: cover; border-radius: 50%; border: 2px solid var(--glass-border); flex-shrink: 0; }
+        .logo-title-text { font-family: var(--font-primary); font-size: 1.15rem; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; text-transform: uppercase; }
         .logo-title-text span { color: var(--vibrant-orange); }
-        .nav-menu { display: flex; gap: 1.5rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
-        .nav-menu li { display: block; white-space: nowrap; }
-        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; position: relative; padding: 0.5rem 0; display: block; line-height: 1; letter-spacing: 0.5px; }
+        .nav-menu { display: flex; gap: 2.2rem; list-style: none; align-items: center; height: 100%; margin-left: auto; }
+        .nav-link { color: #ffffff; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; padding: 0.4rem 0; display: inline-block; position: relative; }
         .nav-link:hover { color: var(--warm-gold); }
-        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--warm-gold); transition: width 0.3s ease; }
+        .nav-link::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 3px; background-color: var(--warm-gold); transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .nav-link:hover::after { width: 100%; }
-
+        .nav-item-dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .standard-dropdown-box { position: absolute; top: 65px; left: 50%; transform: translateX(-50%) translateY(15px); width: 320px; background: #01111c; border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem 0; opacity: 0; visibility: hidden; z-index: 1100; pointer-events: none; }
+        .nav-item-dropdown:hover .standard-dropdown-box { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+        .standard-dropdown-box ul { list-style: none; }
+        .standard-dropdown-box ul li a { color: #cbd5e1; padding: 0.8rem 1.5rem; display: block; font-size: 0.88rem; font-weight: 700; }
+        .standard-dropdown-box ul li a:hover { color: var(--warm-gold); background: rgba(142,202,230,0.08); }
+        .menu-toggle { display: none; font-size: 1.6rem; color: #ffffff; cursor: pointer; }
         .main-container { max-width: 1200px; margin: 0 auto; padding: 140px 2rem 60px 2rem; }
-        
         .section-header { text-align: center; margin-bottom: 3rem; }
         .section-header h2 { font-size: 2.5rem; display: inline-block; position: relative; }
         .section-header h2::after { content: ''; display: block; width: 60%; height: 3px; background: linear-gradient(90deg, var(--ocean-blue), var(--vibrant-orange)); margin: 10px auto 0; }
 
-        /* --- NEW: WHY TRUST US BRAND SECTION --- */
         .trust-intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 5rem; }
-        .trust-intro-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; text-align: left; backdrop-filter: blur(8px); }
+        .trust-intro-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; backdrop-filter: blur(8px); }
         .trust-intro-card i { font-size: 2rem; color: var(--warm-gold); margin-bottom: 1rem; display: block; }
-        .trust-intro-card h3 { font-size: 1.25rem; color: #ffffff; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .trust-intro-card h3 { font-size: 1.25rem; color: #ffffff; margin-bottom: 0.6rem; text-transform: uppercase; }
         .trust-intro-card p { font-size: 0.95rem; color: #cbd5e1; line-height: 1.5; }
 
-        /* --- CASE STUDY INFRASTRUCTURE --- */
-        .case-study-wrapper { 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; 
-            padding: 3rem; margin-bottom: 5rem; backdrop-filter: blur(10px); 
-            display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center;
-        }
+        .case-study-wrapper { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 3rem; margin-bottom: 5rem; backdrop-filter: blur(10px); display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
         .client-brand-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.5rem; margin-bottom: 2rem; }
         .client-logo-panel { max-height: 65px; max-width: 220px; object-fit: contain; }
-        .case-study-title { font-size: 1.8rem; color: var(--warm-gold); text-transform: uppercase; letter-spacing: 0.5px; }
-
+        .case-study-title { font-size: 1.8rem; color: var(--warm-gold); text-transform: uppercase; }
         .param-segment { margin-bottom: 1.5rem; }
-        .param-segment h4 { font-size: 1rem; color: var(--sky-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
+        .param-segment h4 { font-size: 1rem; color: var(--sky-blue); text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
         .param-segment p { font-size: 1.05rem; color: #e2e8f0; line-height: 1.6; }
-        
-        .deliverable-tags-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
+        .deliverable-tags-container { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
         .deliverable-tag-item { font-size: 0.95rem; color: #ffffff; display: flex; align-items: center; gap: 8px; }
-        .deliverable-tag-item i { color: var(--vibrant-orange); font-size: 0.85rem; }
+        .deliverable-tag-item i { color: var(--vibrant-orange); }
 
-        /* --- 3-REEL VERTICAL RUNNING CAROUSEL CONFIGURATION --- */
-        .carousel-outer-wrapper { 
-            position: relative; width: 100%; max-width: 260px; height: 500px; 
-            overflow: hidden; border-radius: 20px; margin: 0 auto;
-            mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-            -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
-        }
-        .carousel-view-track { 
-            display: flex; flex-direction: column; gap: 1.5rem; width: 100%;
-            animation: continuousVerticalScroll 20s linear infinite;
-        }
+        .carousel-outer-wrapper { position: relative; width: 100%; max-width: 260px; height: 500px; overflow: hidden; border-radius: 20px; margin: 0 auto; mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent); }
+        .carousel-view-track { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; animation: continuousVerticalScroll 20s linear infinite; }
         .carousel-outer-wrapper:hover .carousel-view-track { animation-play-state: paused; }
+        @keyframes continuousVerticalScroll { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
 
-        @keyframes continuousVerticalScroll {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-
-        .reel-frame-node { 
-            background: #010f1a; border: 2px solid var(--glass-border); border-radius: 16px; 
-            overflow: hidden; position: relative; aspect-ratio: 9 / 16; width: 100%;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5); cursor: pointer;
-            transition: border-color 0.3s ease, transform 0.3s ease;
-        }
+        .reel-frame-node { background: #010f1a; border: 2px solid var(--glass-border); border-radius: 16px; overflow: hidden; position: relative; aspect-ratio: 9 / 16; width: 100%; box-shadow: 0 8px 25px rgba(0,0,0,0.5); cursor: pointer; transition: all 0.3s ease; }
         .reel-frame-node:hover { border-color: var(--warm-gold); transform: scale(1.02); }
         .reel-frame-node video { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-        
         .reel-video-overlay-ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(1,15,26,0.1) 60%, rgba(1,15,26,0.85)); display: flex; align-items: flex-end; padding: 0.8rem; }
         .reel-meta-tag { font-size: 0.75rem; font-weight: 700; color: var(--sky-blue); text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
 
-        /* --- CINEMA THEATRE FULL SCREEN AUDIO POPUP MODAL --- */
-        .cinema-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 22, 37, 0.95); backdrop-filter: blur(15px);
-            z-index: 2000; display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
+        .cinema-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(1, 22, 37, 0.95); backdrop-filter: blur(15px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
         .cinema-modal-overlay.modal-open { opacity: 1; visibility: visible; }
         .cinema-window-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 9 / 16; border-radius: 20px; overflow: hidden; border: 2px solid var(--warm-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); transform: scale(0.85); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .cinema-modal-overlay.modal-open .cinema-window-box { transform: scale(1); }
         .cinema-window-box video { width: 100%; height: 100%; object-fit: cover; }
-        .cinema-close-trigger { position: absolute; top: 20px; right: 20px; color: #ffffff; font-size: 2rem; cursor: pointer; z-index: 2100; opacity: 0.7; transition: opacity 0.2s ease; }
-        .cinema-close-trigger:hover { opacity: 1; color: var(--vibrant-orange); }
+        .cinema-close-trigger { position: absolute; top: 20px; right: 20px; color: #ffffff; font-size: 2rem; cursor: pointer; z-index: 2100; opacity: 0.7; }
 
-        /* --- ULTRA-LOW PROFILE SLEEK FOOTER --- */
         footer { background: #010c14; border-top: 1px solid var(--glass-border); padding: 1.2rem 2rem 0.8rem 2rem; font-size: 0.85rem; margin-top: 5rem; }
-        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; text-align: left; padding-bottom: 1rem; }
-        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 1.5rem; }
+        .footer-col h4 { font-size: 0.9rem; color: var(--warm-gold); margin-bottom: 0.4rem; text-transform: uppercase; }
         .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
-        .footer-col ul li a { color: #cbd5e1; text-decoration: none; transition: color 0.3s ease; display: block; line-height: 1.2; }
+        .footer-col ul li a { color: #cbd5e1; text-decoration: none; display: block; }
         .footer-col ul li a:hover { color: var(--sky-blue); }
-        .footer-col p { color: #cbd5e1; line-height: 1.3; }
-        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; margin-bottom: 0.5rem; list-style: none; }
-        .footer-social-row a { color: #ffffff; font-size: 1.2rem; transition: all 0.3s ease; }
-        .footer-social-row a:hover { transform: translateY(-2px); }
-        .footer-social-row .inst:hover { color: #E1306C; }
-        .footer-social-row .lnk:hover { color: #0077B5; }
-        .footer-social-row .ytb:hover { color: #FF0000; }
-        .footer-social-row .wts:hover { color: #25D366; }
-        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; }
+        .footer-social-row { max-width: 1240px; margin: 0 auto; display: flex; justify-content: center; gap: 2rem; border-top: 1px solid rgba(142,202,230,0.08); padding-top: 0.8rem; list-style: none; }
+        .footer-social-row a { color: #ffffff; font-size: 1.2rem; }
+        .footer-copy { text-align: center; color: rgba(142, 202, 230, 0.4); font-size: 0.75rem; margin-top: 0.5rem; }
 
-        @media (max-width: 1150px) { .nav-container { padding: 0 1rem; } .nav-menu { gap: 1rem; } .nav-link { font-size: 0.85rem; } .logo-title-text { font-size: 1rem; } }
-        @media (max-width: 1024px) {
-            .case-study-wrapper { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; }
-            .carousel-outer-wrapper { max-width: 320px; height: 420px; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+        @media (max-width: 1024px) { .case-study-wrapper { grid-template-columns: 1fr; padding: 2rem; gap: 2rem; } .carousel-outer-wrapper { max-width: 320px; height: 420px; } .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-menu { position: fixed; top: 80px; left: -100%; width: 100%; height: calc(100vh - 80px); background: #01111c; flex-direction: column; align-items: center; padding: 3rem 0; gap: 1.5rem; overflow-y: auto; transition: left 0.4s ease; }
+            .nav-menu.mobile-open { left: 0; }
+            .standard-dropdown-box { position: relative; top: 0; left: 0; transform: none; width: 100%; display: none; background: rgba(0,0,0,0.2); box-shadow: none; }
+            .nav-item-dropdown:hover .standard-dropdown-box { display: block; }
+            .deliverable-tags-container { grid-template-columns: 1fr; }
         }
-        @media (max-width: 480px) { .logo-title-text { display: none; } .deliverable-tags-container { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) { .logo-title-text { display: none; } }
     </style>
 </head>
 <body>
@@ -147,11 +112,21 @@
                 <img class="logo-img" src="images/logo-new.png" alt="Mappin-Out Logo">
                 <div class="logo-title-text">Mappinout <span>Digital Solutions</span></div>
             </a>
-            <ul class="nav-menu">
+            <i class="fa-solid fa-bars menu-toggle" onclick="toggleMenu()"></i>
+            <ul class="nav-menu" id="navLinks">
                 <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item-dropdown">
+                    <a href="#" class="nav-link">About Us <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:2px;"></i></a>
+                    <div class="standard-dropdown-box">
+                        <ul>
+                            <li><a href="why-choose-us.html">Why Choose Us?</a></li>
+                            <li><a href="what-makes-us-different.html">What Makes Us Different?</a></li>
+                            <li><a href="why-free-audit.html">Why We Offer A Free Content Audit + Sample Reel?</a></li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="services.html" class="nav-link">Services</a></li>
-                <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
                 <li><a href="pricing.html" class="nav-link">Pricing</a></li>
                 <li><a href="autonomous.html" class="nav-link">Autonomous System</a></li>
                 <li><a href="contact.html" class="nav-link">Contact Us</a></li>
@@ -160,199 +135,117 @@
     </header>
 
     <main class="main-container">
-
-        <!-- POSITION 1: WHY TRUST US SECTION -->
         <div class="section-header"><h2>Why Brands Trust MappInOut</h2></div>
         <div class="trust-intro-grid">
-            <div class="trust-intro-card">
-                <i class="fa-solid fa-chess"></i>
-                <h3>Strategy-First Execution</h3>
-                <p>We do not produce content blindly. Every short-form vertical reel or digital asset we script and record is mapped out to build actual long-term audience retention and authority rules for your exact niche market.</p>
-            </div>
-            <div class="trust-intro-card">
-                <i class="fa-solid fa-bolt"></i>
-                <h3>Short-Form Ticker Experts</h3>
-                <p>Our editing operations maximize pacing boundaries, structural story hook frameworks, and crisp title systems specifically tuned to stop user scrolling behaviors across modern visual engagement streams instantly.</p>
-            </div>
-            <div class="trust-intro-card">
-                <i class="fa-solid fa-chart-line"></i>
-                <h3>End-to-End Delivery</h3>
-                <p>From initial market segment auditing and creative script layouts to raw high-definition commercial camera shoots and platform scheduling support, our systems handle the workload entirely.</p>
-            </div>
+            <div class="trust-intro-card"><i class="fa-solid fa-chess"></i><h3>Strategy-First Execution</h3><p>Every short-form vertical reel or asset we script is designed to build authority for your exact niche market metrics rules.</p></div>
+            <div class="trust-intro-card"><i class="fa-solid fa-bolt"></i><h3>Short-Form Ticker Experts</h3><p>Our editing operations maximize pacing frameworks and text overlay arrays to stop users timeline scrolling behaviors cleanly.</p></div>
+            <div class="trust-intro-card"><i class="fa-solid fa-chart-line"></i><h3>End-to-End Delivery</h3><p>From strategic research audits and script planning templates to final renders validation updates, our pipeline handles the full lifecycle workload.</p></div>
         </div>
 
-        <!-- POSITION 2: OUR PORTFOLIO SHOWCASE SECTION -->
         <div class="section-header"><h2>Our Portfolio</h2></div>
 
-        <!-- CLIENT CASE STUDY 1: HE5 SOLUTIONS -->
         <div class="case-study-wrapper">
             <div class="case-study-content">
                 <div class="client-brand-header">
                     <h3 class="case-study-title">HE5 Solutions</h3>
                     <img class="client-logo-panel" src="images/he5-long-logo-kight (1).webp" alt="HE5 Solutions Logo">
                 </div>
-                
                 <div class="param-segment">
-                    <h4><i class="fa-solid fa-triangle-exclamation"></i> What was the problem?</h4>
-                    <p>HE5 Solutions possessed a limited organic presence on social media with no structured content deployment strategy. This resulted in low audience awareness patterns and a distinct difficulty driving target platform traction for career and professional internship pathways.</p>
+                    <h4><i class="fa-solid fa-triangle-exclamation"></i> The Challenge</h4>
+                    <p>HE5 Solutions possessed an unoptimized profile footprint with low conversion traffic metrics across professional development and corporate recruitment streams.</p>
                 </div>
-
                 <div class="param-segment">
-                    <h4><i class="fa-solid fa-gears"></i> What did MappInOut do?</h4>
-                    <p>Our team engineered a complete 30-day organic launch blueprint. We handled structural asset production—building specific content pillars around target market development, formatting short-form script architectures, and implementing caption optimization combined with organic audience growth tactics.</p>
+                    <h4><i class="fa-solid fa-gears"></i> MappInOut Action</h4>
+                    <p>We engineered a localized 30-day content system, mapping micro short-form scripts metrics combined with visual text overlays to lock high engagement retention.</p>
                 </div>
-
                 <div class="param-segment">
-                    <h4><i class="fa-solid fa-circle-check"></i> What was delivered?</h4>
+                    <h4><i class="fa-solid fa-circle-check"></i> Project Scope Deliverables</h4>
                     <div class="deliverable-tags-container">
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Content Launch Strategy</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Audience Market Positioning</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> 6 Optimized Short-Form Reels</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Scriptwriting & Narrative Editing</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Integrated Captions & CTAs</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Performance Tracking Metrics</div>
+                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Growth Blueprint Strategy</div>
+                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> 6 Short-Form Video Assets</div>
+                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Integrated Custom CTAs</div>
                     </div>
                 </div>
             </div>
-
-            <!-- VERTICAL INTERACTIVE TICKER CAROUSEL FOR CLIENT 1 -->
             <div class="carousel-outer-wrapper">
                 <div class="carousel-view-track">
-                    <div class="reel-frame-node" data-video-src="videos/he5-reel1.mp4">
-                        <video src="videos/he5-reel1.mp4" loop muted playsinline></video>
-                        <div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 01</div></div>
-                    </div>
-                    <div class="reel-frame-node" data-video-src="videos/he5-reel2.mp4">
-                        <video src="videos/he5-reel2.mp4" loop muted playsinline></video>
-                        <div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 02</div></div>
-                    </div>
-                    <div class="reel-frame-node" data-video-src="videos/he5-reel3.mp4">
-                        <video src="videos/he5-reel3.mp4" loop muted playsinline></video>
-                        <div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 03</div></div>
-                    </div>
-                    <!-- Duplicate items for infinite scrolling loop layout stack -->
                     <div class="reel-frame-node" data-video-src="videos/he5-reel1.mp4"><video src="videos/he5-reel1.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 01</div></div></div>
                     <div class="reel-frame-node" data-video-src="videos/he5-reel2.mp4"><video src="videos/he5-reel2.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 02</div></div></div>
                     <div class="reel-frame-node" data-video-src="videos/he5-reel3.mp4"><video src="videos/he5-reel3.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 03</div></div></div>
+                    <div class="reel-frame-node" data-video-src="videos/he5-reel1.mp4"><video src="videos/he5-reel1.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 01</div></div></div>
+                    <div class="reel-frame-node" data-video-src="videos/he5-reel2.mp4"><video src="videos/he5-reel2.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Asset 02</div></div></div>
                 </div>
             </div>
         </div>
 
-        <!-- CLIENT CASE STUDY 2: MAMA AND MINI -->
         <div class="case-study-wrapper">
             <div class="case-study-content">
                 <div class="client-brand-header">
                     <h3 class="case-study-title">Mama & Mini</h3>
                     <img class="client-logo-panel" src="images/mm.jpeg" alt="Mama and Mini Logo">
                 </div>
-                
                 <div class="param-segment">
-                    <h4><i class="fa-solid fa-triangle-exclamation"></i> What was the problem?</h4>
-                    <p>The client required an premium product exposure plan to feature their specialty clothing line. Traditional clean lookbooks fell short of showing the raw tactile comfort and realistic emotional appeal necessary to attract contemporary family consumer groups.</p>
+                    <h4><i class="fa-solid fa-triangle-exclamation"></i> The Challenge</h4>
+                    <p>The apparel brand required tactical lifestyle media structures to represent the tactile quality comfort of their premium fabrics lines accurately.</p>
                 </div>
-
                 <div class="param-segment">
-                    <h4><i class="fa-solid fa-gears"></i> What did MappInOut do?</h4>
-                    <p>We designed an immersive content creation shoot focused on active lifestyle display. MappInOut ran on-location product productions, capturing high-definition apparel reels, stylistic fashion styling layers, and raw lifestyle sequences to emphasize fabric depth and family cohesion.</p>
+                    <h4><i class="fa-solid fa-gears"></i> MappInOut Action</h4>
+                    <p>We executed an on-location cinematic production block tracking family candids and lifestyle lookbooks compilation layers to elevate retention parameters loops.</p>
                 </div>
-
                 <div class="param-segment">
-                    <h4><i class="fa-solid fa-circle-check"></i> What was delivered?</h4>
+                    <h4><i class="fa-solid fa-circle-check"></i> Project Scope Deliverables</h4>
                     <div class="deliverable-tags-container">
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Apparel Video Production</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Lifestyle Narrative Sequences</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Custom Media Lookbooks</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Color Grading Matrix Alignment</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Product Highlight Compilations</div>
-                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Organic Consumer Targeting</div>
+                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Apparel Commercial Production</div>
+                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Color Grading Grid Optimization</div>
+                        <div class="deliverable-tag-item"><i class="fa-solid fa-square-check"></i> Media Catalog Architecture</div>
                     </div>
                 </div>
             </div>
-
-            <!-- VERTICAL INTERACTIVE TICKER CAROUSEL FOR CLIENT 2 -->
             <div class="carousel-outer-wrapper">
                 <div class="carousel-view-track">
-                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel1.mp4">
-                        <video src="videos/mama-mini-reel1.mp4" loop muted playsinline></video>
-                        <div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Spotlight</div></div>
-                    </div>
-                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel2.mp4">
-                        <video src="videos/mama-mini-reel2.mp4" loop muted playsinline></video>
-                        <div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Candid</div></div>
-                    </div>
-                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel3.mp4">
-                        <video src="videos/mama-mini-reel3.mp4" loop muted playsinline></video>
-                        <div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Showcase</div></div>
-                    </div>
-                    <!-- Duplicate items for infinite scrolling loop layout stack -->
-                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel1.mp4"><video src="videos/mama-mini-reel1.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Spotlight</div></div></div>
-                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel2.mp4"><video src="videos/mama-mini-reel2.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Candid</div></div></div>
+                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel1.mp4"><video src="videos/mama-mini-reel1.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Candid</div></div></div>
+                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel2.mp4"><video src="videos/mama-mini-reel2.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Spotlight</div></div></div>
                     <div class="reel-frame-node" data-video-src="videos/mama-mini-reel3.mp4"><video src="videos/mama-mini-reel3.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Showcase</div></div></div>
+                    <div class="reel-frame-node" data-video-src="videos/mama-mini-reel1.mp4"><video src="videos/mama-mini-reel1.mp4" loop muted playsinline></video><div class="reel-video-overlay-ui"><div class="reel-meta-tag"><i class="fa-solid fa-volume-high"></i> Spotlight</div></div></div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- CINEMA AUDIO MODAL -->
     <div class="cinema-modal-overlay" id="cinemaModal">
         <i class="fa-solid fa-xmark cinema-close-trigger" onclick="closeTheatre()"></i>
-        <div class="cinema-window-box">
-            <video id="theatrePlayer" autoplay controls playsinline></video>
-        </div>
+        <div class="cinema-window-box"><video id="theatrePlayer" autoplay controls playsinline></video></div>
     </div>
 
     <footer>
         <div class="footer-grid">
             <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="autonomous.html">Autonomous System</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
-            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="services.html">Strategy & Consulting</a></li><li><a href="services.html">Content Production</a></li><li><a href="services.html">Design & Branding</a></li><li><a href="services.html">Social Media Management</a></li><li><a href="services.html">Performance Marketing</a></li><li><a href="services.html">Automation & Tech</a></li></ul></div>
+            <div class="footer-col"><h4>Our Services</h4><ul><li><a href="service-strategy.html">Strategy & Consulting</a></li><li><a href="service-production.html">Content Production</a></li><li><a href="service-branding.html">Design & Branding</a></li><li><a href="service-social.html">Social Media Management</a></li><li><a href="service-marketing.html">Performance Marketing</a></li><li><a href="service-automation.html">Automation & Tech</a></li></ul></div>
             <div class="footer-col"><h4>Address</h4><p><i class="fa-solid fa-location-dot" style="color:var(--warm-gold); margin-right:5px;"></i> Coimbatore, Tamil Nadu, India</p></div>
         </div>
         <ul class="footer-social-row">
-            <li><a href="https://www.instagram.com/mappinout_25?igsh=MTJ6ZjJ2Y2ltdTQzbw==" class="inst" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" class="lnk" aria-label="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
-            <li><a href="https://youtube.com/@mappin-out?si=DnpauxiVIUIoTYyb" class="ytb" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
-            <li><a href="https://wa.me/9952680230" class="wts" aria-label="WhatsApp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
+            <li><a href="https://www.instagram.com/mappinout_25" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/mappinoutdigitalsolutions/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            <li><a href="https://youtube.com/@mappin-out" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+            <li><a href="https://wa.me/9952680230" target="_blank"><i class="fa-brands fa-whatsapp"></i></a></li>
         </ul>
         <div class="footer-copy">&copy; 2026 Mappin-Out Digital Solutions. All Rights Reserved.</div>
     </footer>
 
     <script>
-        const modal = document.getElementById('cinemaModal');
-        const player = document.getElementById('theatrePlayer');
-
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('mobile-open'); }
+        const modal = document.getElementById('cinemaModal'); const player = document.getElementById('theatrePlayer');
         document.querySelectorAll('.reel-frame-node').forEach(frame => {
             const previewVideo = frame.querySelector('video');
-            
-            frame.addEventListener('mouseenter', () => {
-                if(previewVideo) previewVideo.play().catch(()=>{});
-            });
-            
-            frame.addEventListener('mouseleave', () => {
-                if(previewVideo) previewVideo.pause();
-            });
-
+            frame.addEventListener('mouseenter', () => { if(previewVideo) previewVideo.play().catch(()=>{}); });
+            frame.addEventListener('mouseleave', () => { if(previewVideo) previewVideo.pause(); });
             frame.addEventListener('click', () => {
                 const targetSrc = frame.getAttribute('data-video-src');
-                if(targetSrc) {
-                    player.src = targetSrc;
-                    player.muted = false;
-                    modal.classList.add('modal-open');
-                    player.play().catch(()=>{});
-                }
+                if(targetSrc) { player.src = targetSrc; player.muted = false; modal.classList.add('modal-open'); player.play().catch(()=>{}); }
             });
         });
-
-        function closeTheatre() {
-            modal.classList.remove('modal-open');
-            player.pause();
-            player.src = "";
-        }
-
-        modal.addEventListener('click', (e) => {
-            if(e.target === modal) {
-                closeTheatre();
-            }
-        });
+        function closeTheatre() { modal.classList.remove('modal-open'); player.pause(); player.src = ""; }
+        modal.addEventListener('click', (e) => { if(e.target === modal) { closeTheatre(); } });
     </script>
 </body>
 </html>
